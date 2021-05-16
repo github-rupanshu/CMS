@@ -1,9 +1,12 @@
 const express = require("express");
 const app = express();
 const port = 8000;
+const db=require("./config/mongoose");
 
 
-
+// used to extarct jason data from req
+app.use(express.json());
+app.use(express.urlencoded());
 
 
 app.use("/",require("./routes"));
