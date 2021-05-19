@@ -12,14 +12,12 @@ const todoSchema = new mongoose.Schema(
       ref: "Users",
       required: true,
     },
-    date: {
-      type: String,
+    slotId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Slots",
       required: true,
     },
-    time: {
-      type: String,
-      required: true,
-    },
+    // comma seprated 
     symptoms: {
       type: String,
       required: true,
