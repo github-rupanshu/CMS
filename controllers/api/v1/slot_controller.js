@@ -61,7 +61,7 @@ module.exports.update = async (req, res) => {
       data: {
         slot: slot,
       },
-      msg: "slot update!",
+      msg: "slot updated!",
     });
   } catch (err) {
     return res.status(401).json({
@@ -75,12 +75,13 @@ module.exports.delete = async (req, res) => {
     const slot = await Slot.findByIdAndDelete(req.params.id, {
       useFindAndModify: true,
     });
+    
     //slot.save();
     return res.status(200).json({
       data: {
         slot: slot,
       },
-      msg: "slot deeted!",
+      msg: "slot deleted!",
     });
   } catch (err) {
     return res.status(500).json({
@@ -91,13 +92,54 @@ module.exports.delete = async (req, res) => {
 
 module.exports.availableSlots = async (req, res) => {
   try {
+    let currDate = new Date(Date.now());
+    currDate.setHours(0, 0, 0, 0);
+
+    //const slot = await Slot.find({date: {$gte: today}});//date: {$lte: today}}
+    const slot = await Slot.aggregate([{
+      $project: {
+        createdBy:1,
+        date:1,
+        startTime:1,
+        endTime:1,
+        appointments:1,
+        maxAppointments:1,
+        available:{$subtract:["$maxAppointments", {
+          $cond: {
+            if: { $isArray: "$appointments" },
+            then: { $size: "$appointments" },
+            else: 0,
+          },
+        }]}
+      }
+  },
+  { 
+      $match: { 
+        date: {$gte: currDate}
+      }
+  }
+      
+    ]).exec() ;//date: {$lte: today}}
     
-    let today = new Date(Date.now());
-    today.setHours(0,0,0,0)
-    console.log();
+    // const r= await Slot.aggregate([
+    //   { "$unwind": "$appointments" },
+    //   { "$lookup": {
+    //     "from": "$Appointments",
+    //     "foreignField": "_id",
+    //     "localField": "appointments",
+    //     "as": "app"
+    //   }},
+    //   { "$unwind": "$appointments" },
+    //   { "$group": {
+    //     "_id": "$_id",
+    //     "books": { "$push": "$appointments" }
+    //   }}
+    // ])
+   
+    // console.log(r);
     return res.status(200).json({
       data: {
-        slot: today,
+        slot: slot,
       },
       msg: "slot !",
     });

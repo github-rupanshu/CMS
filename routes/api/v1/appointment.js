@@ -1,27 +1,28 @@
 const express = require("express");
 const passport = require("passport");
 const router = express.Router();
-const slotController = require("../../../controllers/api/v1/slot_controller");
+const appointmentController = require("../../../controllers/api/v1/appointment_controller");
 
 router.post(
   "/create",
   passport.authenticate("jwt", { session: false }),
-  slotController.create
+  appointmentController.create
 );
 router.post(
-    "/update/:id",
+  //-----send status only to update status confirmed,pending
+    "/update/:id",     
     passport.authenticate("jwt", { session: false }),
-    slotController.update
+    appointmentController.update
   );
   router.get(
     "/delete/:id",
     passport.authenticate("jwt", { session: false }),
-    slotController.delete
+    appointmentController.delete
   );
   router.get(
-    "/available",
+    "/get",
     passport.authenticate("jwt", { session: false }),
-    slotController.availableSlots
+    appointmentController.get
   );
 //router.post('/logIn',userController.logIn);
 

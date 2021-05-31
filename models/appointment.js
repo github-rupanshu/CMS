@@ -29,6 +29,7 @@ const todoSchema = new mongoose.Schema(
     sts: {
       type: String,
       required: true,
+      default:'pending'
     },
     remarks: [
       {

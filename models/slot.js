@@ -26,6 +26,7 @@ const slotSchema = new mongoose.Schema(
     appointments: [
       {
         type: mongoose.Schema.Types.ObjectId,
+        ref: "Appointments"
       },
     ],
   },
