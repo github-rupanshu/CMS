@@ -13,7 +13,7 @@ router.use("/api", require("./api"));
 
 router.get("/ping", (req, res) => {
   return res.status(200).json({
-    msg: "Ping !!!",
+    msg: "Pong !!!",
     gitUrl: "https://github.com/github-rupanshu/CMS.git",
   });
 });
