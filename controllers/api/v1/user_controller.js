@@ -77,3 +77,22 @@ module.exports.logIn = async (req, res) => {
     return res.status(500).send(err);
   }
 };
+
+module.exports.getDoctor = async(req,res)=>{
+  try {
+    
+    const doctor = await User.find({
+      role: "doctor",
+    }).select('name _id');
+    return res.status(200).json({
+      doctor: doctor,
+      msg: "Doctors",
+    });
+  
+  
+} catch (err) {
+  return res.status(500).json({
+    msg: err,
+  });
+}
+} 

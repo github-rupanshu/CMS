@@ -7,10 +7,11 @@ module.exports.create = async (req, res) => {
     //only admin and doctor can create slot
 
     //------------------TODO check for existing slots
-
+    
     if (req.user.role === "admin" || req.user.role === "doctor") {
       const slot = await Slot.create({
         createdBy: req.user._id,
+        docId:req.body.docId,
         date: req.body.date,
         startTime: req.body.startTime,
         endTime: req.body.endTime,

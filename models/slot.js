@@ -7,6 +7,11 @@ const slotSchema = new mongoose.Schema(
       ref: "Users",
       required: true,
     },
+    docId:{
+      type: mongoose.Schema.Types.ObjectId,
+      ref:"Users",
+      required:true,
+    },
     date: {
       type: Date,
       required: true,

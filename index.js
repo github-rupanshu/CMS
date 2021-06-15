@@ -8,8 +8,8 @@ const passportJWT = require("passport-jwt");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 // used to extarct jason data from req
-// app.use(express.json());
-// app.use(express.urlencoded());
+app.use(express.json());
+app.use(express.urlencoded());
 
 app.use(function (req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
@@ -21,10 +21,10 @@ app.use(function (req, res, next) {
   next();
 });
 // parse application/x-www-form-urlencoded
-app.use(bodyParser.urlencoded({ extended: true }));
+// app.use(bodyParser.urlencoded({ extended: true }));
 
-// parse application/json
-app.use(bodyParser.json());
+// // parse application/json
+// app.use(bodyParser.json());
 
 app.use("/", require("./routes"));
 
